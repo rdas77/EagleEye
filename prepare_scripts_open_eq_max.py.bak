@@ -1,0 +1,13 @@
+from nsetools import Nse
+import json
+import cx_Oracle
+import sys
+nse = Nse()
+q = nse.get_quote('M&MFIN')
+parsed_json = json.loads(json.dumps(q))
+v_open=parsed_json['open']
+v_high=parsed_json['dayHigh']
+con = cx_Oracle.connect('EQUITY/EQUITY@127.0.0.1/XE')
+cur = con.cursor()
+cur.callproc('UPDATE_MAXEQOPEN_RUN_FLG_PRC', ('M&MFIN',v_open,v_high))
+cur.close()

@@ -1,0 +1,1 @@
+python c:\Migration\python\Scripts\nse_new_all_1.py
