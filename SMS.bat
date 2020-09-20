@@ -1,0 +1,1 @@
+sqlplus EQUITY/EQUITY @C:\Migration\python\Scripts\smsproc.sql

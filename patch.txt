@@ -1,0 +1,7 @@
+alter table fivedays_avg_tbl add batch_0_lastprice_n number;
+alter table fivedays_avg_tbl add batch_0_avg_price_n number;
+
+
+alter table fivedays_avg_tbl_hist add batch_0_lastprice_n number;
+
+alter table fivedays_avg_tbl_hist add batch_0_avg_price_n number;

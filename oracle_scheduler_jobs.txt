@@ -1,0 +1,38 @@
+begin
+dbms_scheduler.create_program
+(
+program_name => 'NIFTY_PRG',
+program_type => 'EXECUTABLE',
+program_action => 'D:\Migration\python\Scripts\nifty_test.bat',
+enabled => TRUE,
+comments => 'For getting nifty value in live system'
+);
+end;
+
+BEGIN
+DBMS_SCHEDULER.DROP_SCHEDULE ('NIFTY_SCHEDULE');
+DBMS_SCHEDULER.CREATE_SCHEDULE (
+  schedule_name     => 'NIFTY_SCHEDULE',
+  start_date        => SYSTIMESTAMP,
+  end_date          => NULL,
+  repeat_interval   => 'FREQ=MINUTELY;INTERVAL=5; BYDAY=MON,TUE,WED,THU,FRI,SAT;',
+  comments          => 'Every 5 MINUTES on week days');
+  COMMIT;
+END;
+
+
+begin
+dbms_scheduler.DROP_job('NIFTY_JOB');
+dbms_scheduler.create_job
+(
+job_name => 'NIFTY_JOB',
+program_name => 'NIFTY_PRG',
+schedule_name => 'NIFTY_SCHEDULE',
+comments => 'The jobs runs every 5 minutes of week day',
+enabled => TRUE
+);
+end;
+/
+
+
+

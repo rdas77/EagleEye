@@ -1,0 +1,9 @@
+C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py NESTLEIND
+C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py NMDC
+C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py OIL
+C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py PAGEIND
+C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py GAIL
+C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py PIDILITIND
+C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py RAMCOCEM
+C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py RAYMOND
+C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py RELCAPITAL

@@ -1,0 +1,64 @@
+
+SQL*Loader: Release 11.2.0.2.0 - Production on Thu Sep 17 23:41:56 2020
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+Control File:   C:\Migration\python\Scripts\bhavcopy.ctl
+Data File:      C:\Users\das\Downloads\sec_bhavdata_full.csv
+  Bad File:     C:\Users\das\Downloads\sec_bhavdata_full.bad
+  Discard File: C:\Users\das\Downloads\sec_bhavdata_full.dsc 
+ (Allow all discards)
+
+Number to load: ALL
+Number to skip: 0
+Errors allowed: 50
+Bind array:     64 rows, maximum of 256000 bytes
+Continuation:    none specified
+Path used:      Conventional
+
+Table DAILY_NSE_ALL, loaded from every logical record.
+Insert option in effect for this table: APPEND
+TRAILING NULLCOLS option in effect
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+SYMBOL                              FIRST     *   ,  O(") CHARACTER            
+SERIES                               NEXT     *   ,  O(") CHARACTER            
+DATE1                                NEXT     *   ,  O(") DATE dd-mon-yyyy     
+PREV_CLOSE                           NEXT     *   ,  O(") CHARACTER            
+OPEN_PRICE                           NEXT     *   ,  O(") CHARACTER            
+HIGH_PRICE                           NEXT     *   ,  O(") CHARACTER            
+LOW_PRICE                            NEXT     *   ,  O(") CHARACTER            
+LAST_PRICE                           NEXT     *   ,  O(") CHARACTER            
+CLOSE_PRICE                          NEXT     *   ,  O(") CHARACTER            
+AVG_PRICE                            NEXT     *   ,  O(") CHARACTER            
+TTL_TRD_QNTY                         NEXT     *   ,  O(") CHARACTER            
+TURNOVER_LACS                        NEXT     *   ,  O(") CHARACTER            
+NO_OF_TRADES                         NEXT     *   ,  O(") CHARACTER            
+DELIV_QTY                            NEXT     *   ,  O(") CHARACTER            
+DELIV_PER                            NEXT     *   ,  O(") CHARACTER            
+
+Record 1: Rejected - Error on table DAILY_NSE_ALL, column DATE1.
+ORA-01858: a non-numeric character was found where a numeric was expected
+
+
+Table DAILY_NSE_ALL:
+  1955 Rows successfully loaded.
+  1 Row not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Space allocated for bind array:                 247680 bytes(64 rows)
+Read   buffer bytes: 1048576
+
+Total logical records skipped:          0
+Total logical records read:          1956
+Total logical records rejected:         1
+Total logical records discarded:        0
+
+Run began on Thu Sep 17 23:41:56 2020
+Run ended on Thu Sep 17 23:42:06 2020
+
+Elapsed time was:     00:00:09.84
+CPU time was:         00:00:00.32
