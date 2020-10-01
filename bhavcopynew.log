@@ -1,10 +1,10 @@
 
-SQL*Loader: Release 11.2.0.2.0 - Production on Thu Oct 1 20:35:29 2020
+SQL*Loader: Release 11.2.0.2.0 - Production on Tue Sep 29 20:18:36 2020
 
 Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
 
-Control File:   C:\Migration\python\Scripts\bhavcopy.ctl
-Data File:      C:\Users\das\Downloads\sec_bhavdata_full.csv
+Control File:   bhavcopynew.ctl
+Data File:      C:\Users\das\Downloads\cm28SEP2020bhav.csv
   Bad File:     C:\Users\das\Downloads\sec_bhavdata_full.bad
   Discard File: C:\Users\das\Downloads\sec_bhavdata_full.dsc 
  (Allow all discards)
@@ -24,41 +24,38 @@ TRAILING NULLCOLS option in effect
 ------------------------------ ---------- ----- ---- ---- ---------------------
 SYMBOL                              FIRST     *   ,  O(") CHARACTER            
 SERIES                               NEXT     *   ,  O(") CHARACTER            
-DATE1                                NEXT     *   ,  O(") DATE dd-mon-yyyy     
-PREV_CLOSE                           NEXT     *   ,  O(") CHARACTER            
 OPEN_PRICE                           NEXT     *   ,  O(") CHARACTER            
 HIGH_PRICE                           NEXT     *   ,  O(") CHARACTER            
 LOW_PRICE                            NEXT     *   ,  O(") CHARACTER            
-LAST_PRICE                           NEXT     *   ,  O(") CHARACTER            
 CLOSE_PRICE                          NEXT     *   ,  O(") CHARACTER            
-AVG_PRICE                            NEXT     *   ,  O(") CHARACTER            
+LAST_PRICE                           NEXT     *   ,  O(") CHARACTER            
+PREV_CLOSE                           NEXT     *   ,  O(") CHARACTER            
 TTL_TRD_QNTY                         NEXT     *   ,  O(") CHARACTER            
 TURNOVER_LACS                        NEXT     *   ,  O(") CHARACTER            
+DATE1                                NEXT     *   ,  O(") DATE dd-mon-yyyy     
 NO_OF_TRADES                         NEXT     *   ,  O(") CHARACTER            
-DELIV_QTY                            NEXT     *   ,  O(") CHARACTER            
-DELIV_PER                            NEXT     *   ,  O(") CHARACTER            
 
 Record 1: Rejected - Error on table DAILY_NSE_ALL, column DATE1.
 ORA-01858: a non-numeric character was found where a numeric was expected
 
 
 Table DAILY_NSE_ALL:
-  1963 Rows successfully loaded.
+  2003 Rows successfully loaded.
   1 Row not loaded due to data errors.
   0 Rows not loaded because all WHEN clauses were failed.
   0 Rows not loaded because all fields were null.
 
 
-Space allocated for bind array:                 247680 bytes(64 rows)
+Space allocated for bind array:                 198144 bytes(64 rows)
 Read   buffer bytes: 1048576
 
 Total logical records skipped:          0
-Total logical records read:          1964
+Total logical records read:          2004
 Total logical records rejected:         1
 Total logical records discarded:        0
 
-Run began on Thu Oct 01 20:35:29 2020
-Run ended on Thu Oct 01 20:35:36 2020
+Run began on Tue Sep 29 20:18:36 2020
+Run ended on Tue Sep 29 20:18:45 2020
 
-Elapsed time was:     00:00:07.63
-CPU time was:         00:00:00.33
+Elapsed time was:     00:00:08.76
+CPU time was:         00:00:00.12

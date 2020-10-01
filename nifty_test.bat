@@ -41,6 +41,7 @@ C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py	SRTRA
 C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py	SIEMENS
 C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py	SRF
 C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py 	SBIN
+C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py	SBILIFE
 C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py 	SAIL
 C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py 	SUNPHARMA
 C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py 	SUNTV

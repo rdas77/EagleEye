@@ -46,11 +46,12 @@ C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py 	EQUI
 C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py 	ESCORTS
 C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py	EXIDEIND
 C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py 	FEDERALBNK
+C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py      ENGINERSIN
 C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py	GAIL
 C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py	GLENMARK
-C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py	GMRINFRA
 C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py 	GODREJCP
 C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py 	GRASIM
+C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py      GRANULES
 C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py 	HAVELLS
 C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py	HCLTECH
 C:\Migration\python\python  C:\Migration\python\Scripts\get_price_quote.py 	HDFCBANK
