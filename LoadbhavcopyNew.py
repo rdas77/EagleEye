@@ -18,11 +18,18 @@ with open(os.path.join('C:\\Users\\das\\Downloads', sys.argv[1]), "r") as csv_fi
     csv_reader = csv.reader(csv_file, delimiter=',')
     next(csv_reader)
     for lines in csv_reader:
+
+       if lines[1] == 'EQ':
+
+        #print(lines[1])
+
         cur.execute("insert into DAILY_NSE_ALL_TEST (SYMBOL,SERIES,OPEN,HIGH,LOW,CLOSE,LAST,PREVCLOSE,TOTTRDQTY,TOTTRDVAL,TIMESTAMP,TOTALTRADES,ISIN) values (:1, :2, :3, :4, :5, :6,:7,:8,:9,:10,:11,:12,:13)",(lines[0], lines[1], lines[2], lines[3], lines[4], lines[5],lines[6], lines[7], lines[8], lines[9], lines[10], lines[11],lines[12]))
 
 cur.close()
 con.commit()
 con.close()
+
+
 
 
      
