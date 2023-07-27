@@ -8,6 +8,12 @@ import os
 import nsepython as np
 import json
 from datetime import datetime
+
+def running_status():
+    import datetime
+    start_now=datetime.datetime.now().replace(hour=9, minute=15, second=0, microsecond=0)
+    end_now=datetime.datetime.now().replace(hour=15, minute=30, second=0, microsecond=0)
+    return start_now<datetime.datetime.now()<end_now
   
 # Functions setup
 def sudo_placement():
@@ -30,34 +36,35 @@ def EagleEye_job1():
     #next(csv_reader)
     for lines in list_symbol:
         #print("The symbol processing is",lines)
-        try:
-            if lines not in ('NIFTY','NIFTYIT','BANKNIFTY' ):
-                q = np.nsetools_get_quote(lines)
-                parsed_json = json.loads(json.dumps(q))
-                l_lastprice=parsed_json['lastPrice']
-                #print("The last price is ",l_lastprice)
-                l_averagePrice=round( parsed_json['totalTradedValue']/parsed_json['totalTradedVolume'],2)
-                #print("The average price is ",l_averagePrice)
-                l_totaltradedvolume=parsed_json['totalTradedVolume']
-                #print("The total traded volume is ",l_totaltradedvolume)
-                l_max_price_n=parsed_json['dayHigh']
-                #print("The max price for the symbol ",l_max_price_n)
-                l_min_price_n=parsed_json['dayLow']
-                #print("The min price for the symbol ",l_min_price_n)
-                l_open_price_n=parsed_json['open']
-                #print("The open price for the symbol ",l_open_price_n)
-                con = cx_Oracle.connect('EQUITY/EQUITY@localhost/XE')
-                cur = con.cursor()
-                cur.execute("INSERT INTO daily_nse_movement_trans (symbol,lastprice_n,last_avg_price_n,totaltradedvol_n,max_price_n,min_price_n,open_price_n)  VALUES (:1,:2,:3,:4,:5,:6,:7)" ,(lines,l_lastprice, l_averagePrice,l_totaltradedvolume,l_max_price_n,l_min_price_n,l_open_price_n))
-                statement = 'DELETE FROM daily_nse_movement_trans WHERE  EXCEPTION_FLAG_V=:type'
-                cur.execute(cur.execute(statement, {'type':'Y'}))
-                cur.close()
-                con.commit()
-                #print("End of the loop ---")
-                con.close()
-        except Exception as exception:
-            print("Exception~~",exception)
-            continue
+        #try:
+        if lines not in ('NIFTY','NIFTYIT','BANKNIFTY' ) and running_status():
+            #print("The symbol processing is",lines)
+            q = np.nsetools_get_quote(lines)
+            parsed_json = json.loads(json.dumps(q))
+            l_lastprice=parsed_json['lastPrice']
+            #print("The last price is ",l_lastprice)
+            l_averagePrice=round( parsed_json['totalTradedValue']/parsed_json['totalTradedVolume'],2)
+            #print("The average price is ",l_averagePrice)
+            l_totaltradedvolume=parsed_json['totalTradedVolume']
+            #print("The total traded volume is ",l_totaltradedvolume)
+            l_max_price_n=parsed_json['dayHigh']
+            #print("The max price for the symbol ",l_max_price_n)
+            l_min_price_n=parsed_json['dayLow']
+            #print("The min price for the symbol ",l_min_price_n)
+            l_open_price_n=parsed_json['open']
+            #print("The open price for the symbol ",l_open_price_n)
+            con = cx_Oracle.connect('EQUITY/EQUITY@localhost/XE')
+            cur = con.cursor()
+            cur.execute("INSERT INTO daily_nse_movement_trans (symbol,lastprice_n,last_avg_price_n,totaltradedvol_n,max_price_n,min_price_n,open_price_n)  VALUES (:1,:2,:3,:4,:5,:6,:7)" ,(lines,l_lastprice, l_averagePrice,l_totaltradedvolume,l_max_price_n,l_min_price_n,l_open_price_n))
+            statement = 'DELETE FROM daily_nse_movement_trans WHERE  EXCEPTION_FLAG_V=:type'
+            cur.execute(cur.execute(statement, {'type':'Y'}))
+            cur.close()
+            con.commit()
+            #print("End of the loop ---")
+            con.close()
+        #except Exception as exception:
+        #print("Exception~~",exception)
+        #continue
         
         #print("End of the loop ---")
     print("Successfully one batch is completed ~~~",datetime.now())
@@ -87,5 +94,10 @@ while True:
   
     # Checks whether a scheduled task 
     # is pending to run or not
-    schedule.run_pending()
-    time.sleep(1)
+    try :
+        schedule.run_pending()
+        time.sleep(1)
+    except Exception as exception:
+        print("Exception~~",exception)
+        continue
+        
