@@ -30,7 +30,9 @@ def bedtime():
       
 def EagleEye_job1():
     #nse = Nse()
-    list_symbol = np.fnolist()
+    list_symbol=[]
+    if running_status():
+        list_symbol = np.fnolist()
     #with open(r'D:\\EagleEye\\Script\\Trading_Mast_zone2.csv',"r") as csv_file:
     #csv_reader = csv.reader(csv_file, delimiter=',')
     #next(csv_reader)
