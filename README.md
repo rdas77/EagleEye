@@ -4,10 +4,14 @@ This is an equity BI tool developed by Rasbihari Das
 
 #Technology Used 
 
-Python /oracle 11g Xpress Edition
+Python /oracle 11g Xpress Edition/UI python streamlit/Data visulation matplotlib
 
-Currently it does not have user interface only you can get alert from SMS gateway.
-Future paln to develop interface on java/nodejs/andriod/ios 
+It has simple UI bulid with python streamlit library .
+
+It gives daily top5 weight gainer reports 
+   High vloume stocks and price action with timestamp
+   Incranation reports
+   
 
 
 
