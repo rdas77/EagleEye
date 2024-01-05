@@ -4,7 +4,7 @@ This is an equity BI tool developed by Rasbihari Das
 
 #Technology Used 
 
-Python /oracle 11g Xpress Edition/UI python streamlit/Data visulation matplotlib
+Python /oracle 11g Xpress Edition/UI python streamlit/Data Visualization matplotlib
 
 It has simple UI bulid with python streamlit library .
 
