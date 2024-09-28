@@ -1,105 +1,129 @@
-import schedule
-import time
-import cx_Oracle
-import csv
-import sys
-import os
-#from nsetools import Nse
-import nsepython as np
+"""
+New Script for market data for Eagleeye
+
+Date of development 30 Dec 2023
+
+"""
+
+import os,sys
+# os.chdir(os.path.dirname(os.path.abspath(__file__)))
+# sys.path.insert(1, os.path.join(sys.path[0], '..'))
+
+import requests
 import json
-from datetime import datetime
+import datetime,time
+import cx_Oracle
+import schedule
+
+
+
+headers = {
+    'Connection': 'keep-alive',
+    'Cache-Control': 'max-age=0',
+    'DNT': '1',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36',
+    'Sec-Fetch-User': '?1',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'Sec-Fetch-Site': 'none',
+    'Sec-Fetch-Mode': 'navigate',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'Accept-Language': 'en-US,en;q=0.9,hi;q=0.8',
+}
+
+payload='https://www.nseindia.com/api/equity-stockIndices?index=SECURITIES%20IN%20F%26O'
 
 def running_status():
     import datetime
-    start_now=datetime.datetime.now().replace(hour=9, minute=15, second=0, microsecond=0)
+    start_now=datetime.datetime.now().replace(hour=9, minute=10, second=0, microsecond=0)
     end_now=datetime.datetime.now().replace(hour=15, minute=30, second=0, microsecond=0)
     return start_now<datetime.datetime.now()<end_now
-  
-# Functions setup
-def sudo_placement():
-    print("Get ready for Sudo Placement at Geeksforgeeks")
-  
-def good_luck():
-    print("Good Luck for Test")
-  
-def work():
-    print("Study and work hard")
-  
-def bedtime():
-    print("It is bed time go rest")
-      
-def EagleEye_job1():
-    #nse = Nse()
-    list_symbol=[]
-    if running_status():
-        list_symbol = np.fnolist()
-    #with open(r'D:\\EagleEye\\Script\\Trading_Mast_zone2.csv',"r") as csv_file:
-    #csv_reader = csv.reader(csv_file, delimiter=',')
-    #next(csv_reader)
-    for lines in list_symbol:
-        #print("The symbol processing is",lines)
-        #try:
-        if lines not in ('NIFTY','NIFTYIT','BANKNIFTY' ) and running_status():
-            #print("The symbol processing is",lines)
-            q = np.nsetools_get_quote(lines)
-            parsed_json = json.loads(json.dumps(q))
-            l_lastprice=parsed_json['lastPrice']
-            #print("The last price is ",l_lastprice)
-            l_averagePrice=round( parsed_json['totalTradedValue']/parsed_json['totalTradedVolume'],2)
-            #print("The average price is ",l_averagePrice)
-            l_totaltradedvolume=parsed_json['totalTradedVolume']
-            #print("The total traded volume is ",l_totaltradedvolume)
-            l_max_price_n=parsed_json['dayHigh']
-            #print("The max price for the symbol ",l_max_price_n)
-            l_min_price_n=parsed_json['dayLow']
-            #print("The min price for the symbol ",l_min_price_n)
-            l_open_price_n=parsed_json['open']
-            #print("The open price for the symbol ",l_open_price_n)
+
+#positions = requests.get(payload,headers=headers).json()
+#print(positions['data'][0])
+
+
+'''
+
+for x in range(0, len(positions['data'])):
+    print('symbol',positions['data'][x]['symbol'],'lastprice',positions['data'][x]['lastPrice'],'Volume',positions['data'][x]['totalTradedVolume'])
+
+'''    
+
+def get_market_data():
+          
+    try:
+        
+        if running_status():
+            
+            positions = requests.get(payload,headers=headers).json()
+            #print(len(positions['data']))
+            print (positions['marketStatus']['marketStatus'])
             con = cx_Oracle.connect('EQUITY/EQUITY@localhost/XE')
+            for x in range(0, len(positions['data'])):
+                l_lastprice=positions['data'][x]['lastPrice']
+                #print("The last price is ",l_lastprice)
+                l_averagePrice=round( positions['data'][x]['totalTradedValue']/positions['data'][x]['totalTradedVolume'],2)
+                #print("The average price is ",l_averagePrice)
+                l_totaltradedvolume=positions['data'][x]['totalTradedVolume']
+                #print("The total traded volume is ",l_totaltradedvolume)
+                l_max_price_n=positions['data'][x]['dayHigh']
+                #print("The max price for the symbol ",l_max_price_n)
+                l_min_price_n=positions['data'][x]['dayLow']
+                #print("The min price for the symbol ",l_min_price_n)
+                l_open_price_n=positions['data'][x]['open']
+                #print("The open price for the symbol ",l_open_price_n)
+                cur = con.cursor()
+                cur.execute("INSERT INTO daily_nse_movement_trans (symbol,lastprice_n,last_avg_price_n,totaltradedvol_n,max_price_n,min_price_n,open_price_n)  VALUES (:1,:2,:3,:4,:5,:6,:7)" ,(positions['data'][x]['symbol'],l_lastprice, l_averagePrice,l_totaltradedvolume,l_max_price_n,l_min_price_n,l_open_price_n))
+                statement = 'DELETE FROM daily_nse_movement_trans WHERE  EXCEPTION_FLAG_V=:type'
+                cur.execute(cur.execute(statement, {'type':'Y'}))
+                cur.close()
+                con.commit()
+            '''    
+            print('Process start fro the NIFTY 50')
+            payload='https://www.nseindia.com/api/equity-stockIndices?index=NIFTY%2050'
+            positions = requests.get(payload,headers=headers).json()
+            l_lastprice=positions['data'][0]['lastPrice']
+            l_averagePrice=round( positions['data'][0]['totalTradedValue']/positions['data'][0]['totalTradedVolume'],2)
+            l_totaltradedvolume=positions['data'][0]['totalTradedVolume']
+            l_max_price_n=positions['data'][0]['dayHigh']
+            l_min_price_n=positions['data'][0]['dayLow']
             cur = con.cursor()
-            cur.execute("INSERT INTO daily_nse_movement_trans (symbol,lastprice_n,last_avg_price_n,totaltradedvol_n,max_price_n,min_price_n,open_price_n)  VALUES (:1,:2,:3,:4,:5,:6,:7)" ,(lines,l_lastprice, l_averagePrice,l_totaltradedvolume,l_max_price_n,l_min_price_n,l_open_price_n))
+            cur.execute("INSERT INTO daily_nse_movement_trans (symbol,lastprice_n,last_avg_price_n,totaltradedvol_n,max_price_n,min_price_n,open_price_n)  VALUES (:1,:2,:3,:4,:5,:6,:7)" ,(positions['data'][x]['symbol'],l_lastprice, l_averagePrice,l_totaltradedvolume,l_max_price_n,l_min_price_n,l_open_price_n))
             statement = 'DELETE FROM daily_nse_movement_trans WHERE  EXCEPTION_FLAG_V=:type'
             cur.execute(cur.execute(statement, {'type':'Y'}))
             cur.close()
             con.commit()
-            #print("End of the loop ---")
             con.close()
-        #except Exception as exception:
-        #print("Exception~~",exception)
-        #continue
-        
-        #print("End of the loop ---")
-    print("Successfully one batch is completed ~~~",datetime.now())
-  
-# Task scheduling
-# After every 10mins geeks() is called. 
-schedule.every(3).minutes.do(EagleEye_job1)
-  
-# After every hour geeks() is called.
-#schedule.every().hour.do(geeks)
-  
-# Every day at 12am or 00:00 time bedtime() is called.
-#schedule.every().day.at("00:00").do(bedtime)
-  
-# After every 5 to 10mins in between run work()
-#schedule.every(5).to(10).minutes.do(work)
-  
-# Every monday good_luck() is called
-#schedule.every().monday.do(good_luck)
-  
-# Every tuesday at 18:00 sudo_placement() is called
-#schedule.every().tuesday.at("18:00").do(sudo_placement)
-  
-# Loop so that the scheduling task
-# keeps on running all time.
-while True:
-  
-    # Checks whether a scheduled task 
-    # is pending to run or not
-    try :
-        schedule.run_pending()
-        time.sleep(1)
+            '''
+            print("Successfully one batch is completed ~~~",datetime.datetime.now())    
+        else:
+            print("Market is closed ~~~",datetime.datetime.now())
+                          
     except Exception as exception:
-        print("Exception~~",exception)
-        continue
+        print('The exception is',exception)
+
+'''        main block started over here
+
+'''
+
+if __name__ == '__main__':
+
+    schedule.every(1).minutes.do(get_market_data)
         
+    while True:
+        # Checks whether a scheduled task
+        # is pending to run or not
+        try :
+            schedule.run_pending()
+            time.sleep(1)
+        except Exception as exception:
+            print("Exception~~",exception)
+            continue
+
+   
+
+    
+    
+
+
